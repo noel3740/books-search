@@ -1,0 +1,41 @@
+  .reactNav .nav-wrapper {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .reactNav nav {
+    background-color: lightgrey;
+  }
+  
+  .reactNav a{
+    color: black;
+  }   
+
+  .bookLogo {
+    background-image: url(./logo.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 40px;
+    margin-top: 12px;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .reactNav .brand-logo {
+      font-size: 1.7rem;
+    }
+
+    .reactNav .bookLogo {
+      margin-top: 7px;
+    }
+  }
+
+  @media only screen and (max-width: 400px) {
+    .reactNav .brand-logo {
+      font-size: 1.2rem;
+    }
+
+    .reactNav .bookLogo { 
+      width: 30px;
+      margin-top: 12px;
+    }
+  }
