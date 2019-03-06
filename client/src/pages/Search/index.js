@@ -4,7 +4,7 @@ import './style.css';
 class Search extends React.Component {
     render() {
         return (
-            <div className="searchPage">
+            <div className="container searchPage">
                 <h1>This is the search page</h1>
             </div>
         )
