@@ -7,7 +7,7 @@ class Nav extends React.Component {
         //Initialize the nav bar
         window.$('.sidenav').sidenav();
     };
-    
+
     render() {
         return (
             <div className="reactNav">
@@ -18,8 +18,8 @@ class Nav extends React.Component {
                             <a href="/" className="brand-logo"><i className="bookLogo"></i> Book Search</a>
                             <a href="#!" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
                             <ul className="right hide-on-med-and-down">
-                                <li><a href="/">Search</a></li>
-                                <li><a href="/saved">Saved</a></li>
+                                <li className={ window.location.pathname.toLowerCase() !== "/saved" ? "active" : "" }><a href="/">Search</a></li>
+                                <li className={ window.location.pathname.toLowerCase() === "/saved" ? "active" : "" }><a href="/saved">Saved</a></li>
                             </ul>
                         </div>
                     </nav>
@@ -27,8 +27,8 @@ class Nav extends React.Component {
                 </div>
 
                 <ul className="sidenav" id="mobile-demo">
-                    <li><a href="/">Search</a></li>
-                    <li><a href="/saved">Saved</a></li>
+                    <li className={ window.location.pathname.toLowerCase() !== "/saved" ? "active" : "" }><a href="/">Search</a></li>
+                    <li className={ window.location.pathname.toLowerCase() === "/saved" ? "active" : "" }><a href="/saved">Saved</a></li>
                 </ul>
 
             </div>
