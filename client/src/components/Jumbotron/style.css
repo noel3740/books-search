@@ -1,6 +1,5 @@
 .jumbotron {
-    padding-top: 30px;
-    padding-bottom: 60px;
+    padding: 30px 12px 60px 12px;
     background-image: url(./background2.jpg);
     background-repeat: no-repeat;
     background-size: 100% 100%;
