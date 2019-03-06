@@ -4,7 +4,7 @@
   }
 
   .reactNav nav {
-    background-color: lightgrey;
+    background-color: lightgrey !important;
   }
   
   .reactNav a{
