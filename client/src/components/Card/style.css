@@ -13,6 +13,14 @@
         display: block !important;
     }
 
+    .horizontalCard .card-action a {
+        width: 100%;
+    }
+
+    .viewButton {
+        margin-bottom: 15px;
+    }
+
     /* .horizontalCard .card-image {
         max-width: 100% !important;
     }
