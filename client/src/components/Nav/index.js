@@ -24,7 +24,7 @@ class Nav extends React.Component {
 
                     <nav className="white">
                         <div className="nav-wrapper">
-                            <a href="/" className="brand-logo"><i className="bookLogo"></i> Book Search</a>
+                            <Link to={"/"} className="brand-logo"><i className="bookLogo"></i> Book Search</Link>
                             <a href="#!" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
                             <ul className="right hide-on-med-and-down">
                                 <li className={window.location.pathname.toLowerCase() !== "/saved" ? "active" : ""}>
