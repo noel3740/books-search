@@ -12,3 +12,27 @@ body {
 .page-footer {
   background-color: lightgrey !important;
 }
+
+.btn {
+  background-color: #4da3b4;  
+}
+
+.btn:hover, .btn-large:hover, .btn-small:hover {
+  background-color: #63c7db;
+}
+
+.btn:focus, .btn:focus, .btn-large:focus, .btn-small:focus {
+  background-color: #326069;
+}
+
+.marginRight {
+  margin-right: 15px;
+}
+
+.unsetOverflow {
+  overflow: unset;
+}
+
+.btnFloatingMarginRight {
+  margin-right: 45px;
+}
