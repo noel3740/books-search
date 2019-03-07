@@ -1,7 +1,3 @@
-.reactCard {
-    cursor: pointer;
-}
-
 .reactCardImage {
     width: 100%;
     height: 100%;
@@ -10,3 +6,19 @@
 .card {
     width: 100%;
 }
+
+
+@media only screen and (max-width: 500px) {
+    .horizontalCard {
+        display: block !important;
+    }
+
+    /* .horizontalCard .card-image {
+        max-width: 100% !important;
+    }
+
+    .horizontalCard img {
+        width: 100% !important;
+    } */
+  }
+
