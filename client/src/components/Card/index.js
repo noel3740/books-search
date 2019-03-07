@@ -18,8 +18,8 @@ const Card = props => {
                             <p>{props.description}</p>
                         </div>
                         <div className="card-action">
-                            <a data-book-id={props.bookId} href={props.previewLink} target="_blank" rel="noopener noreferrer" className="marginRight waves-effect waves-light btn btn-small viewButton"><i className="material-icons left">visibility</i>view</a>
-                            <a data-book-id={props.bookId} href="#!" className="waves-effect waves-light btn btn-small"><i className="material-icons left">save</i>save</a>
+                            <a data-book-id={props.bookId} href={props.previewLink} target="_blank" rel="noopener noreferrer" className="marginRight waves-effect waves-light btn viewButton"><i className="material-icons left">visibility</i>view</a>
+                            <a data-book-id={props.bookId} href="#!" className="waves-effect waves-light btn"><i className="material-icons left">save</i>save</a>
                         </div>
                     </div>
                 </div>
