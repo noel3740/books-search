@@ -25,14 +25,18 @@ body {
   background-color: #326069;
 }
 
-.marginRight {
-  margin-right: 15px;
-}
-
 .unsetOverflow {
   overflow: unset;
 }
 
+.marginRight {
+  margin-right: 15px;
+}
+
 .marginBottom {
   margin-bottom: 15px;
+}
+
+.paddingRight {
+  padding-right: 15px;
 }
