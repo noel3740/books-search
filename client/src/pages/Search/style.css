@@ -1,6 +1,10 @@
-.searchFormContainer, .searchResultsContainer {
-    /* padding: 15px; */
+/* .searchFormContainer, .searchResultsContainer {
+    padding: 15px;
     margin-top: 15px;
+} */
+
+.searchForm {
+    padding: 15px !important;
 }
 
 .cardButtons {
