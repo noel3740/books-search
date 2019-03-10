@@ -14,7 +14,7 @@ const Card = props => {
                         <div className="card-stacked">
                             <div className="card-content">
                                 <span className="card-title">{props.title}</span>
-                                <p><small>by {props.author}</small></p>
+                                <p><small>by {props.authors ? props.authors.join(',') : "N/A" }</small></p>
                                 <br />
                                 <p>{props.description}</p>
                             </div>
