@@ -20,6 +20,10 @@ class Saved extends React.Component {
                 this.setState({
                     books: books.data
                 });
+            })
+            .catch(error => {
+                console.log(error);
+                window.M.toast({html: 'Error getting books from the API service!'});
             });
     };
 
@@ -27,8 +31,13 @@ class Saved extends React.Component {
         //Delete the books from the database
         APIService.deleteBook(bookId)
             .then(() => {
+                window.M.toast({html: 'Book deleted!'});
                 //Get all the books saved to the database and set the state
                 this.refreshBooks();
+            })
+            .catch(error => {
+                console.log(error);
+                window.M.toast({html: 'Error deleting book from the API service!'});
             });
     }
 

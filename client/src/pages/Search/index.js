@@ -20,6 +20,7 @@ class Search extends React.Component {
 
     searchForBookTitle = event => {
         event.preventDefault();
+
         const searchForm = document.getElementsByClassName("searchForm")[0];
 
         if (searchForm.checkValidity()) {
@@ -31,6 +32,7 @@ class Search extends React.Component {
                 })
                 .catch(error => {
                     console.log(error);
+                    window.M.toast({html: 'Error getting books from the google book service!'});
                 });
         }
     }
@@ -48,8 +50,12 @@ class Search extends React.Component {
         };
 
         APIService.saveBook(newBook)
+            .then(() => {
+                window.M.toast({html: 'Book saved!'});
+            })
             .catch(error => {
                 console.log(error);
+                window.M.toast({html: 'Error saving book to the API service!'});
             });
     };
 
