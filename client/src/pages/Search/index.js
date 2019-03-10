@@ -1,36 +1,57 @@
 import React from 'react';
 import './style.css';
 import Card from '../../components/Card';
-import googleBookService from '../../services/googleBooksService';
+import GoogleBookService from '../../services/GoogleBooksService';
+import APIService from '../../services/APIService';
 
 class Search extends React.Component {
 
     state = {
         searchTerm: "",
         books: []
-      };
+    };
 
     handleInputChange = event => {
         const { name, value } = event.target;
         this.setState({
-          [name]: value
+            [name]: value
         });
-      };
+    };
 
     searchForBookTitle = event => {
         event.preventDefault();
+        const searchForm = document.getElementsByClassName("searchForm")[0];
 
-        googleBookService.searchForBookTitle(this.state.searchTerm)
-            .then(books => {
-                console.log(books.data.items);
-                this.setState({
-                    books: books.data.items
+        if (searchForm.checkValidity()) {
+            GoogleBookService.searchForBookTitle(this.state.searchTerm)
+                .then(books => {
+                    this.setState({
+                        books: books.data.items
+                    });
+                })
+                .catch(error => {
+                    console.log(error);
                 });
-            })
+        }
+    }
+
+    onSaveHandler = (bookId) => {
+        const bookServiceBook = this.state.books.find((element) => element.id === bookId);
+
+        const newBook = {
+            bookId: bookServiceBook.id,
+            smallThumbnail: bookServiceBook.volumeInfo.imageLinks.smallThumbnail,
+            infoLink: bookServiceBook.volumeInfo.infoLink,
+            title: bookServiceBook.volumeInfo.title,
+            authors: bookServiceBook.volumeInfo.authors,
+            description: bookServiceBook.volumeInfo.description
+        };
+
+        APIService.saveBook(newBook)
             .catch(error => {
                 console.log(error);
-            })
-    }
+            });
+    };
 
     render() {
         return (
@@ -40,7 +61,7 @@ class Search extends React.Component {
                     <form className="col s12 z-depth-1 searchForm">
                         <div className="row">
                             <div className="input-field col s12">
-                                <input onChange={this.handleInputChange} name="searchTerm" id="searchTerm" type="text" className="validate" />
+                                <input onChange={this.handleInputChange} name="searchTerm" id="searchTerm" type="text" className="validate" required pattern="^[a-zA-Z1-9].*" />
                                 <label htmlFor="searchTerm">Book Title</label>
                             </div>
                         </div>
@@ -58,13 +79,14 @@ class Search extends React.Component {
                     <h4>Search Results</h4>
                     {this.state.books.map(book =>
                         <Card
-                        key={book.id}
-                        bookId={book.id}
-                        image={book.volumeInfo.imageLinks.smallThumbnail}
-                        previewLink={book.volumeInfo.infoLink}
-                        title={book.volumeInfo.title}
-                        author={book.volumeInfo.authors.join(',')}
-                        description={book.volumeInfo.description} />
+                            key={book.id}
+                            bookId={book.id}
+                            image={book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.smallThumbnail : ''}
+                            previewLink={book.volumeInfo.infoLink}
+                            title={book.volumeInfo.title}
+                            author={book.volumeInfo.authors.join(',')}
+                            description={book.volumeInfo.description}
+                            onSaveHandler={this.onSaveHandler} />
                     )}
                 </div>
 
