@@ -1,10 +1,35 @@
 import React from 'react';
 import './style.css';
-import Card from '../../components/Card'
+import Card from '../../components/Card';
+import APIService from '../../services/APIService';
 
 class Saved extends React.Component {
     state = {
         books: []
+    };
+
+    componentDidMount = () => {
+        //Get all the books saved to the database and set the state
+        this.refreshBooks();
+    };
+
+    refreshBooks = () => {
+        //Get all the books saved to the database and set the state
+        APIService.getBooks()
+            .then(books => {
+                this.setState({
+                    books: books.data
+                });
+            });
+    };
+
+    onDeleteHandler = (bookId) => {
+        //Delete the books from the database
+        APIService.deleteBook(bookId)
+            .then(() => {
+                //Get all the books saved to the database and set the state
+                this.refreshBooks();
+            });
     }
 
     render() {
@@ -15,13 +40,14 @@ class Saved extends React.Component {
                     {this.state.books.map(book =>
                         <Card
                             isSaved="true"
-                            key={book.id}
-                            bookId={book.id}
+                            key={book.bookId}
+                            bookId={book.bookId}
                             image={book.smallThumbnail}
                             previewLink={book.infoLink}
                             title={book.title}
                             author={book.authors.join(',')}
-                            description={book.description} />
+                            description={book.description}
+                            onDeleteHandler={this.onDeleteHandler} />
                     )}
                 </div>
             </div>
