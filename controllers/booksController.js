@@ -16,17 +16,48 @@ module.exports = {
             .catch(err => res.status(422).json(err));
     },
     create: function (req, res) {
+        const query = {
+            bookId: req.body.bookId
+        };
+
+        const bodyBook = req.body;
+
+        const newBook = {
+            bookId: bodyBook.bookId,
+            smallThumbnail: bodyBook.smallThumbnail,
+            infoLink: bodyBook.infoLink,
+            title: bodyBook.title,
+            authors: bodyBook.authors,
+            description: bodyBook.description
+        };
+
+        const options = {
+            upsert: true, 
+            setDefaultsOnInsert: true
+        };
+
         db.Book
-            .findOneAndUpdate(
-                { bookId: req.body.bookId },
-                req.body,
-                { upsert: true, setDefaultsOnInsert: true })
+            .findOneAndUpdate(query, newBook, options)
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
     update: function (req, res) {
+        const query = {
+            bookId: req.params.id
+        }
+
+        const bodyBook = req.body;
+
+        const updateBook = {
+            smallThumbnail: bodyBook.smallThumbnail,
+            infoLink: bodyBook.infoLink,
+            title: bodyBook.title,
+            authors: bodyBook.authors,
+            description: bodyBook.description
+        };
+
         db.Book
-            .findOneAndUpdate({ bookId: req.params.id }, req.body)
+            .findOneAndUpdate(query, updateBook)
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
