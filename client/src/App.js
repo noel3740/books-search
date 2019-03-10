@@ -7,6 +7,14 @@ import Saved from "./pages/Saved";
 import './App.css';
 
 class App extends Component {
+  
+
+  componentDidMount = () => {
+     window.ioSocket.on('message', function (msg) {
+        window.M.toast({ html: msg });
+    });
+  }
+
   render() {
     return (
       <BrowserRouter>
