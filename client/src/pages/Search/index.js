@@ -26,13 +26,20 @@ class Search extends React.Component {
         if (searchForm.checkValidity()) {
             GoogleBookService.searchForBookTitle(this.state.searchTerm)
                 .then(books => {
-                    this.setState({
-                        books: books.data.items
-                    });
+                    if (books.data.items && books.data.items.length > 0) {
+                        this.setState({
+                            books: books.data.items
+                        });
+                    } else {
+                        this.setState({
+                            books: []
+                        });
+                        window.M.toast({ html: 'No books found!' });
+                    }
                 })
                 .catch(error => {
                     console.log(error);
-                    window.M.toast({html: 'Error getting books from the google book service!'});
+                    window.M.toast({ html: 'Error getting books from the google book service!' });
                 });
         }
     }
@@ -51,11 +58,11 @@ class Search extends React.Component {
 
         APIService.saveBook(newBook)
             .then(() => {
-                window.M.toast({html: 'Book saved!'});
+                window.M.toast({ html: 'Book saved!' });
             })
             .catch(error => {
                 console.log(error);
-                window.M.toast({html: 'Error saving book to the API service!'});
+                window.M.toast({ html: 'Error saving book to the API service!' });
             });
     };
 
