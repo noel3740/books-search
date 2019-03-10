@@ -4,6 +4,8 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 const routes = require("./routes");
 const mongoose = require("mongoose");
+var http = require("http").Server(app);
+const io = require("socket.io")(http);
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
@@ -27,6 +29,14 @@ mongoose.connect(
   process.env.MONGODB_URI || "mongodb://localhost/booksearch"
 );
 
-app.listen(PORT, function () {
+//Connect to socket io
+io.on('connection', function(socket){
+  console.log("User connected");
+  socket.on('message', function(msg){
+    io.emit('message', msg);
+  });
+});
+
+http.listen(PORT, function () {
   console.log(`🌎 ==> API server now on port ${PORT}!`);
 });
