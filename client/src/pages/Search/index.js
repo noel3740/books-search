@@ -59,6 +59,7 @@ class Search extends React.Component {
         APIService.saveBook(newBook)
             .then(() => {
                 window.M.toast({ html: 'Book saved!' });
+                window.ioSocket.emit('message', `A new book titled '${newBook.title}' was saved!`);
             })
             .catch(error => {
                 console.log(error);
@@ -97,7 +98,7 @@ class Search extends React.Component {
                             image={book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.smallThumbnail : ''}
                             previewLink={book.volumeInfo.infoLink}
                             title={book.volumeInfo.title}
-                            author={book.volumeInfo.authors.join(',')}
+                            authors={book.volumeInfo.authors}
                             description={book.volumeInfo.description}
                             onSaveHandler={this.onSaveHandler} />
                     )}
