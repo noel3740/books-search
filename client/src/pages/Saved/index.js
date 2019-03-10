@@ -54,7 +54,7 @@ class Saved extends React.Component {
                             image={book.smallThumbnail}
                             previewLink={book.infoLink}
                             title={book.title}
-                            author={book.authors.join(',')}
+                            authors={book.authors}
                             description={book.description}
                             onDeleteHandler={this.onDeleteHandler} />
                     )}
