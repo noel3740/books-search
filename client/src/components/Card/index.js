@@ -9,7 +9,7 @@ const Card = props => {
                 <div className="row">
                     <div className="card horizontal horizontalCard">
                         <div className="card-image">
-                            <img alt={props.title} src={props.image} />
+                            <img alt={props.title} src={props.image ? props.image : "https://via.placeholder.com/128x124"} />
                         </div>
                         <div className="card-stacked">
                             <div className="card-content">
@@ -19,9 +19,9 @@ const Card = props => {
                                 <p>{props.description}</p>
                             </div>
                             <div className="card-action">
-                                <a data-book-id={props.bookId} href={props.previewLink} target="_blank" rel="noopener noreferrer" className="marginRight waves-effect waves-light btn viewButton"><i className="material-icons left">visibility</i>view</a>
-                                { props.isSaved ? '' : <a data-book-id={props.bookId} href="#!" className="waves-effect waves-light btn"><i className="material-icons left">save</i>save</a> }
-                                { props.isSaved ? <a data-book-id={props.bookId} href="#!" className="waves-effect waves-light btn"><i className="material-icons left">delete</i>delete</a> : '' }
+                                <a href={props.previewLink} target="_blank" rel="noopener noreferrer" className="marginRight waves-effect waves-light btn viewButton"><i className="material-icons left">visibility</i>view</a>
+                                { props.isSaved ? '' : <a href="#!" className="waves-effect waves-light btn" onClick={() => props.onSaveHandler(props.bookId)}><i className="material-icons left">save</i>save</a> }
+                                { props.isSaved ? <a href="#!" className="waves-effect waves-light btn" onClick={() => props.onDeleteHandler(props.bookId)}><i className="material-icons left">delete</i>delete</a> : '' }
                             </div>
                         </div>
                     </div>
