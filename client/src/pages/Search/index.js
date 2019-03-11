@@ -4,6 +4,7 @@ import Card from '../../components/Card';
 import GoogleBookService from '../../services/GoogleBooksService';
 import APIService from '../../services/APIService';
 import Jumbotron from '../../components/Jumbotron';
+import LockScreen from '../../components/LockScreen';
 
 class Search extends React.Component {
 
@@ -25,6 +26,10 @@ class Search extends React.Component {
         const searchForm = document.getElementsByClassName("searchForm")[0];
 
         if (searchForm.checkValidity()) {
+
+            //Lock the screen when searching
+            this.lockScreen.lock("Searching");
+
             GoogleBookService.searchForBookTitle(this.state.searchTerm)
                 .then(books => {
                     if (books.data.items && books.data.items.length > 0) {
@@ -41,6 +46,10 @@ class Search extends React.Component {
                 .catch(error => {
                     console.log(error);
                     window.M.toast({ html: 'Error getting books from the google book service!' });
+                })
+                .finally(() => {
+                    //Unlock the scren when searching is complete
+                    this.lockScreen.unlock();
                 });
         }
     }
@@ -57,6 +66,9 @@ class Search extends React.Component {
             description: bookServiceBook.volumeInfo.description
         };
 
+        //Lock the screen while the book is being saved
+        this.lockScreen.lock("Saving");
+
         APIService.saveBook(newBook)
             .then(() => {
                 window.M.toast({ html: 'Book saved!' });
@@ -65,6 +77,10 @@ class Search extends React.Component {
             .catch(error => {
                 console.log(error);
                 window.M.toast({ html: 'Error saving book to the API service!' });
+            })
+            .finally(() => {
+                //Unlock the screen after the book has been saved
+                this.lockScreen.unlock();
             });
     };
 
@@ -112,6 +128,8 @@ class Search extends React.Component {
                     </div>
 
                 </div>
+
+                <LockScreen id="serachPageLockScreen" ref={ (lockScreen) => this.lockScreen = lockScreen } />
             </div>
         )
     }
