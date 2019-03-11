@@ -3,6 +3,7 @@ import './style.css';
 import Card from '../../components/Card';
 import GoogleBookService from '../../services/GoogleBooksService';
 import APIService from '../../services/APIService';
+import Jumbotron from '../../components/Jumbotron';
 
 class Search extends React.Component {
 
@@ -69,41 +70,48 @@ class Search extends React.Component {
 
     render() {
         return (
-            <div className="container searchPage">
-                <div className="row searchFormContainer">
-                    <h4>Book Title Search</h4>
-                    <form className="col s12 z-depth-1 searchForm">
-                        <div className="row">
-                            <div className="input-field col s12">
-                                <input onChange={this.handleInputChange} name="searchTerm" id="searchTerm" type="text" className="validate" required pattern="^[a-zA-Z1-9].*" />
-                                <label htmlFor="searchTerm">Book Title</label>
+            <div>
+                <Jumbotron
+                    mainText="Book Search"
+                    detailText="Search for and save books of interest"
+                />
+
+                <div className="container searchPage">
+                    <div className="row searchFormContainer">
+                        <h4>Book Title Search</h4>
+                        <form className="col s12 z-depth-1 searchForm">
+                            <div className="row">
+                                <div className="input-field col s12">
+                                    <input onChange={this.handleInputChange} name="searchTerm" id="searchTerm" type="text" className="validate" required pattern="^[a-zA-Z1-9].*" />
+                                    <label htmlFor="searchTerm">Book Title</label>
+                                </div>
                             </div>
-                        </div>
-                        <div className="row">
-                            <div className="col s12">
-                                <button onClick={this.searchForBookTitle} className="btn waves-effect waves-light" type="submit" name="action">Search
+                            <div className="row">
+                                <div className="col s12">
+                                    <button onClick={this.searchForBookTitle} className="btn waves-effect waves-light" type="submit" name="action">Search
                                     <i className="material-icons right">send</i>
-                                </button>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
-                </div>
+                        </form>
+                    </div>
 
-                <div className="row searchResultsContainer">
-                    <h4>Search Results</h4>
-                    {this.state.books.map(book =>
-                        <Card
-                            key={book.id}
-                            bookId={book.id}
-                            image={book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.smallThumbnail : ''}
-                            previewLink={book.volumeInfo.infoLink}
-                            title={book.volumeInfo.title}
-                            authors={book.volumeInfo.authors}
-                            description={book.volumeInfo.description}
-                            onSaveHandler={this.onSaveHandler} />
-                    )}
-                </div>
+                    <div className="row searchResultsContainer">
+                        <h4>Search Results</h4>
+                        {this.state.books.map(book =>
+                            <Card
+                                key={book.id}
+                                bookId={book.id}
+                                image={book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.smallThumbnail : ''}
+                                previewLink={book.volumeInfo.infoLink}
+                                title={book.volumeInfo.title}
+                                authors={book.volumeInfo.authors}
+                                description={book.volumeInfo.description}
+                                onSaveHandler={this.onSaveHandler} />
+                        )}
+                    </div>
 
+                </div>
             </div>
         )
     }
