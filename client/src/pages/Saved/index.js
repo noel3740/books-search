@@ -3,6 +3,7 @@ import './style.css';
 import Card from '../../components/Card';
 import APIService from '../../services/APIService';
 import Jumbotron from '../../components/Jumbotron';
+import LockScreen from '../../components/LockScreen';
 
 class Saved extends React.Component {
     state = {
@@ -15,6 +16,10 @@ class Saved extends React.Component {
     };
 
     refreshBooks = () => {
+
+        //Lock the screen while the books are being refreshed
+        this.lockScreen.lock();
+        
         //Get all the books saved to the database and set the state
         APIService.getBooks()
             .then(books => {
@@ -25,20 +30,32 @@ class Saved extends React.Component {
             .catch(error => {
                 console.log(error);
                 window.M.toast({ html: 'Error getting books from the API service!' });
+            })
+            .finally(() => {
+                //Unlock the screen after the books have been refreshed
+                this.lockScreen.unlock();
             });
     };
 
     onDeleteHandler = (bookId) => {
+        //Lock the screen while the book is being deleted
+        this.lockScreen.lock("Deleting");
+
         //Delete the books from the database
         APIService.deleteBook(bookId)
             .then(() => {
                 window.M.toast({ html: 'Book deleted!' });
                 //Get all the books saved to the database and set the state
+                //Refresh books will also unlock the screen when completed
                 this.refreshBooks();
             })
             .catch(error => {
+                //Unlock the screen on error
+                this.lockScreen.unlock();
+
+                //Log error and display a message to the  user letting them know that there was an error
                 console.log(error);
-                window.M.toast({ html: 'Error deleting book from the API service!' });
+                window.M.toast({ html: 'Error deleting book from the API service!' });                
             });
     }
 
@@ -66,6 +83,8 @@ class Saved extends React.Component {
                         )}
                     </div>
                 </div>
+
+                <LockScreen id="savedPageLockScreen" ref={ (lockScreen) => this.lockScreen = lockScreen } />
             </div>
         )
     }
