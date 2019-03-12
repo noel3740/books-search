@@ -74,6 +74,8 @@ class Search extends React.Component {
                     //Unlock the scren when searching is complete
                     this.lockScreen.unlock();
                 });
+        } else {
+            window.M.toast({ html: 'Please enter a title to search for' });
         }
     }
 
