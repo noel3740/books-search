@@ -30,12 +30,35 @@ class Search extends React.Component {
             //Lock the screen when searching
             this.lockScreen.lock("Searching");
 
+            //Set the book state to blank
+            this.setState({
+                books: []
+            });
+
             GoogleBookService.searchForBookTitle(this.state.searchTerm)
                 .then(books => {
                     if (books.data.items && books.data.items.length > 0) {
-                        this.setState({
-                            books: books.data.items
-                        });
+                        //Get all books from the database
+                        APIService.getBooks()
+                            .then(dbBooks => {
+
+                                //Get all bookIds that are currently in the database
+                                const dbBookIds = [];
+                                dbBooks.data.forEach(book => {
+                                    dbBookIds.push(book.bookId);
+                                });
+
+                                //Display only books that are not already in the database
+                                this.setState({
+                                    books: books.data.items.filter(book => !dbBookIds.includes(book.id))
+                                });
+                            })
+                            .catch(error => {
+                                console.log(error);
+                                window.M.toast({ html: 'Error getting existing saved books from the database!' });
+                            })
+
+
                     } else {
                         this.setState({
                             books: []
@@ -71,6 +94,18 @@ class Search extends React.Component {
 
         APIService.saveBook(newBook)
             .then(() => {
+                //Remove the book from the books state
+                this.setState((state) => {
+                    const bookToremove = state.books.find(book => book.id === newBook.bookId);
+                    const indexOfBookToRemove = state.books.indexOf(bookToremove);
+                    state.books.splice(indexOfBookToRemove, 1);
+    
+                    return {
+                        books: state.books
+                    }
+                });
+
+                //Display to all users that the book was saved. 
                 window.M.toast({ html: 'Book saved!' });
                 window.ioSocket.emit('message', `A new book titled '${newBook.title}' was saved!`);
             })
