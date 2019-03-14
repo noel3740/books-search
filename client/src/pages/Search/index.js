@@ -48,10 +48,16 @@ class Search extends React.Component {
                                     dbBookIds.push(book.bookId);
                                 });
 
+                                const filteredBooks = books.data.items.filter(book => !dbBookIds.includes(book.id));
+
                                 //Display only books that are not already in the database
                                 this.setState({
-                                    books: books.data.items.filter(book => !dbBookIds.includes(book.id))
+                                    books: filteredBooks
                                 });
+
+                                if (!filteredBooks|| filteredBooks.length === 0) {
+                                    window.M.toast({ html: 'No books to display! All books that were found have already been saved.' });
+                                }
                             })
                             .catch(error => {
                                 console.log(error);
