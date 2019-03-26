@@ -42,18 +42,25 @@ class Search extends React.Component {
                         APIService.getBooks()
                             .then(dbBooks => {
 
+                                console.log("database books: ", dbBooks);
+                                console.log("book service books: ", books);
+
                                 //Loop throough all the books from the database and remove any that were returned from the google books api
                                 dbBooks.data.forEach(dbbook => {
                                     const bookToRemoveIndex = books.data.items.findIndex((element) => element.id === dbbook.bookId);
+
+                                    console.log(bookToRemoveIndex);
                                     books.data.items.splice(bookToRemoveIndex, 1);
                                 });
+
+                                console.log(books.data.items);
 
                                 //Display only books that are not already in the database
                                 this.setState({
                                     books: books.data.items
                                 });
 
-                                if (!books.data.items|| books.data.items.length === 0) {
+                                if (!books.data.items || books.data.items.length === 0) {
                                     window.M.toast({ html: 'No books to display! All books that were found have already been saved.' });
                                 }
                             })
