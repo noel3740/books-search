@@ -41,26 +41,20 @@ class Search extends React.Component {
                         //Get all books from the database
                         APIService.getBooks()
                             .then(dbBooks => {
-
-                                console.log("database books: ", dbBooks);
-                                console.log("book service books: ", books);
-
-                                //Loop throough all the books from the database and remove any that were returned from the google books api
-                                dbBooks.data.forEach(dbbook => {
-                                    const bookToRemoveIndex = books.data.items.findIndex((element) => element.id === dbbook.bookId);
-
-                                    console.log(bookToRemoveIndex);
-                                    books.data.items.splice(bookToRemoveIndex, 1);
+                                //Get all bookIds that are currently in the database
+                                const dbBookIds = [];
+                                dbBooks.data.forEach(book => {
+                                    dbBookIds.push(book.bookId);
                                 });
 
-                                console.log(books.data.items);
+                                const filteredBooks = books.data.items.filter(book => !dbBookIds.includes(book.id));
 
                                 //Display only books that are not already in the database
                                 this.setState({
-                                    books: books.data.items
+                                    books: filteredBooks
                                 });
 
-                                if (!books.data.items || books.data.items.length === 0) {
+                                if (!filteredBooks || filteredBooks.length === 0) {
                                     window.M.toast({ html: 'No books to display! All books that were found have already been saved.' });
                                 }
                             })
@@ -111,7 +105,7 @@ class Search extends React.Component {
                     const bookToremove = state.books.find(book => book.id === newBook.bookId);
                     const indexOfBookToRemove = state.books.indexOf(bookToremove);
                     state.books.splice(indexOfBookToRemove, 1);
-    
+
                     return {
                         books: state.books
                     }
@@ -176,7 +170,7 @@ class Search extends React.Component {
 
                 </div>
 
-                <LockScreen id="serachPageLockScreen" ref={ (lockScreen) => this.lockScreen = lockScreen } />
+                <LockScreen id="serachPageLockScreen" ref={(lockScreen) => this.lockScreen = lockScreen} />
             </div>
         )
     }
